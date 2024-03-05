@@ -1,6 +1,7 @@
 #pragma once
 
 // at Least Usable Shell ;)
+// don't judge me plz i put together this and it's working anyway
 
 #include <iostream>
 
