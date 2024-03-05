@@ -19,9 +19,9 @@ struct Stu {
 };
 
 std::ostream& operator<< (std::ostream& s, const Stu& stu) {
-    return s << "Student (\""
-             << stu.id << "\", \""
-             << stu.name << "\", "
+    return s << "Student (id: \""
+             << stu.id << "\", name: \""
+             << stu.name << "\", grade: "
              << stu.grade << ")";
 }
 
