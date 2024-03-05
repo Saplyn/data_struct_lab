@@ -64,7 +64,8 @@ public:
         this->head_loc = new_node;
         this->list_size++;
     }
-    void remove_all(bool (*predicate)(const T&)) {
+    template<typename Fn>
+    void remove_all(Fn predicate) {
         Node* curr = this->head_loc;
         Node* prev = nullptr;
         while (curr != nullptr) {
@@ -83,7 +84,8 @@ public:
             curr = next;
         }
     }
-    List<T> find_all(bool (*predicate)(const T&)) {
+    template<typename Fn>
+    List<T> find_all(Fn predicate) {
         List<T> res;
         Node* curr = this->head_loc;
         while (curr != nullptr) {
@@ -94,13 +96,27 @@ public:
         }
         return res;
     }
-    void map_self(T (*fn)(T&)) {
+    template<typename Fn>
+    List<T*> find_all_loc(Fn predicate) {
+        List<T*> res;
+        Node* curr = this->head_loc;
+        while (curr != nullptr) {
+            if (predicate(curr->data)) {
+                res.push_front(&(curr->data));
+            }
+            curr = curr->next_loc;
+        }
+        return res;
+    }
+    template<typename Fn>
+    void map_self(Fn fn) {
         Node* curr = this->head_loc;
         while (curr != nullptr) {
             fn(curr->data);
             curr = curr->next_loc;
         }
     }
+    std::size_t size() const { return this->list_size; }
 
 //~ Iterator Implementation
     class Iter {

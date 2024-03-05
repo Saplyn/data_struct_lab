@@ -66,14 +66,16 @@ public:
         }
         this->head_loc[this->vec_size++] = val;
     }
-    void remove_all(bool (*predicate)(const T&)) {
+    template<typename Fn>
+    void remove_all(Fn predicate) {
         for (int i = 0; i < this->vec_size; i++) {
             if (predicate(this->head_loc[i])) {
                 std::swap(this->head_loc[i], this->head_loc[--this->vec_size]);
             }
         }
     }
-    Vec<T> find_all(bool (*predicate)(const T&)) {
+    template<typename Fn>
+    Vec<T> find_all(Fn predicate) {
         Vec<T> res;
         for (int i = 0; i < this->vec_size; i++) {
             if (predicate(this->head_loc[i])) {
@@ -82,11 +84,23 @@ public:
         }
         return res;
     }
-    void map_self(void (*fn)(T&)) {
+    template<typename Fn>
+    Vec<T*> find_all_loc(Fn predicate) {
+        Vec<T*> res;
+        for (int i = 0; i < this->vec_size; i++) {
+            if (predicate(this->head_loc[i])) {
+                res.push_back(&(this->head_loc[i]));
+            }
+        }
+        return res;
+    }
+    template<typename Fn>
+    void map_self(Fn fn) {
         for (int i = 0; i < this->vec_size; i++) {
             fn(this->head_loc[i]);
         }
     }
+    std::size_t size() const { return this->vec_size; }
 
 //~ Iterator Implementation
 public:
